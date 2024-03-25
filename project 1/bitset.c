@@ -1,42 +1,21 @@
-#include <stdio.h>
+/* *********************** bitset.c *********************** */
+/*  Author: Marek Čupr (xcuprm01)                           */
+/*  College: VUT FIT                                        */
+/*  Subject: IJC - Project 1                                */
+/*  Date: 23. 02. 2024                                      */
+/*  Functionality: Declare inline functions for bitset.h    */
+/* ******************************************************** */
+
 #include "bitset.h"
 
-/*
-int main(){
-    //printf("%lu\n", ULONG_MAX);
-    
-    bitset_create(p,100000L);
+#ifdef USE_INLINE
 
-    bitset_alloc(q,100000L)
+extern inline void bitset_free(unsigned long arr_name[]);
+extern inline bitset_index_t bitset_size(unsigned long arr_name[]);
+extern inline void bitset_fill(unsigned long arr_name[], int bool);
+extern inline void bitset_setbit(unsigned long arr_name[], bitset_index_t index, int bool);
+extern inline unsigned long bitset_getbit(unsigned long arr_name[], bitset_index_t index);
 
-    bitset_setbit(p,20,1);
-    printf("%lu\n", p[1]);
-    unsigned long bit = bitset_getbit(p, 20);
-    printf("%lu\n", p[1]);
-    printf("%lu\n", bit);
-    bitset_setbit(p,65,1);
-    bit = bitset_getbit(p, 65);
-    printf("%lu\n", p[1]);
-    printf("%lu\n", bit);
-    bitset_setbit(p,150,1);
-    bit = bitset_getbit(p, 150);
-    printf("%lu\n", p[1]);
-    printf("%lu\n", bit);
-    bitset_setbit(p,20,0);
-    bit = bitset_getbit(p, 20);
-    printf("%lu\n", p[1]);
-    printf("%lu\n", bit);
-    bitset_setbit(p,65,0);
-    bit = bitset_getbit(p, 65);
-    printf("%lu\n", p[1]);
-    printf("%lu\n", bit);
-    bitset_setbit(p,150,0);
-    printf("%lu\n", p[1]);
-    bit = bitset_getbit(p, 150);
-    printf("%lu\n", bit);
-    //for (unsigned long i = 1; i < p[0]; i++){
-    //    printf("random is %lu\n", p[i]);
-    //}
+#endif
 
-    return 0;
-}*/
+/* End of bitset.c */
