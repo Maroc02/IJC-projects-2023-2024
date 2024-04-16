@@ -19,25 +19,25 @@ all: primes primes-i no-comment
 
 # Primes target
 primes: primes.o eratosthenes.o bitset.o error.o
-	$(CC) $(CFLAGS) $(OPT) $(LDFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(OPT) $^ -o $@ $(LDFLAGS)
 
 primes.o: primes.c eratosthenes.h bitset.h
-	$(CC) $(CFLAGS) $(OPT) $(LDFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(OPT) -c $< -o $@ $(LDFLAGS)
 
 # Primes inline target
 primes-i: primes-i.o eratosthenes-i.o bitset-i.o error.o
-	$(CC) $(CFLAGS) $(OPT) $(LDFLAGS) -DUSE_INLINE $^ -o $@
+	$(CC) $(CFLAGS) $(OPT) -DUSE_INLINE $^ -o $@ $(LDFLAGS) 
 
 primes-i.o: primes.c eratosthenes.h bitset.h
-	$(CC) $(CFLAGS) $(OPT) $(LDFLAGS) -DUSE_INLINE -c $< -o $@
+	$(CC) $(CFLAGS) $(OPT) -DUSE_INLINE -c $< -o $@ $(LDFLAGS) 
 
 # Eratosthenes target
 eratosthenes.o: eratosthenes.c eratosthenes.h bitset.h
-	$(CC) $(CFLAGS) $(OPT) $(LDFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(OPT) -c $< -o $@ $(LDFLAGS) 
 
 # Eratosthenes inline target
 eratosthenes-i.o: eratosthenes.c eratosthenes.h bitset.h
-	$(CC) $(CFLAGS) $(OPT) $(LDFLAGS) -DUSE_INLINE -c $< -o $@
+	$(CC) $(CFLAGS) $(OPT) -DUSE_INLINE -c $< -o $@ $(LDFLAGS)
 
 # Bitset target
 bitset.o: bitset.c bitset.h error.h
