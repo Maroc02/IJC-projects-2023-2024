@@ -5,4 +5,4 @@
 - make help
 
 ### Warning: the current script tests only the static wordcount, to test the dynamic part you need to:
-  - change every './wordcount' line in the **wordcount-test.sh** file to ' 'LD_LIBRARY_PATH="." ./wordcount-dynamic'
+  - change every `./wordcount` line in the **wordcount-test.sh** file to `LD_LIBRARY_PATH="." ./wordcount-dynamic`
