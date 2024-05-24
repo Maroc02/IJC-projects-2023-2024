@@ -3,7 +3,7 @@
 /*  College: VUT FIT                                     */
 /*  Subject: IJC - Project 2                             */
 /*  Date: 09. 04. 2024                                   */
-/*  Functionality: Private header file for htab.c        */
+/*  Functionality: Private header file for htab.h        */
 /* ***************************************************** */
 
 #include <string.h>
@@ -28,4 +28,4 @@ struct htab {
     htab_item_t **items_m; // Array of items
 };
 
-/* End of io.h */
+/* End of htab_private.h */

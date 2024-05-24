@@ -1,8 +1,5 @@
-
-
 #include <stdint.h>
 
-#include "htab.h"
 #include "htab_private.h"
 
 size_t htab_hash_function(htab_key_t str) {

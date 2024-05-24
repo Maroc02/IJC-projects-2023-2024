@@ -1,17 +1,17 @@
-/* ************************* tail.c ************************ */
-/*  Author: Marek Čupr (xcuprm01)                            */
-/*  College: VUT FIT                                         */
-/*  Subject: IJC - Project 2                                 */
-/*  Date: 31. 03. 2024                                       */
-/*  Functionality: Print the last n lines of the input file  */
-/* ********************************************************* */
+/* ***************************** tail.c *************************** */
+/*  Author: Marek Čupr (xcuprm01)                                   */
+/*  College: VUT FIT                                                */
+/*  Subject: IJC - Project 2                                        */
+/*  Date: 31. 03. 2024                                              */
+/*  Functionality: Print the last n number of lines from the input  */
+/* **************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #define EXIT_FAILURE 1 // Error exit value
-#define LINE_END_RESERVED 2 // Line terminating symbols ('\0', '\n')
+#define LINE_END_RESERVED 2 // Line terminating symbols ('\n', '\0')
 #define MAX_LINE_LEN 2047 // Maximum line length
 
 /**
@@ -31,14 +31,14 @@ typedef struct circularBuffer {
  * @return Pointer to the circular buffer.
  */
 circularBuffer_t* cbuf_create(unsigned int n) {
-    // Allocate memory for circular buffer
+    // Allocate memory for the circular buffer
     circularBuffer_t* circBuffer = (circularBuffer_t *) malloc(sizeof(circularBuffer_t));
     if (circBuffer == NULL) {
         fprintf(stderr, "Error: Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
 
-    // Allocate memory for circular buffer items
+    // Allocate memory for the circular buffer items
     circBuffer->buffer_m = (char **) malloc(n * sizeof(char *));
     if (circBuffer->buffer_m == NULL) {
         free(circBuffer);
@@ -46,7 +46,7 @@ circularBuffer_t* cbuf_create(unsigned int n) {
         exit(EXIT_FAILURE);
     }
 
-    // Initialize default values
+    // Initialize the default values
     circBuffer->circleStart_m = 0;
     circBuffer->circleEnd_m = -1;
     circBuffer->circleIndex_m = 0;
@@ -90,7 +90,7 @@ void cbuf_put(circularBuffer_t* cb, char* line) {
  * @return Pointer to the line.
  */
 char* cbuf_get(circularBuffer_t* cb) {
-    // Index of the line to return
+    // Get the line index
     int index = (cb->circleStart_m) % cb->circleSize_m;
     (cb->circleStart_m)++;
 
@@ -103,7 +103,7 @@ char* cbuf_get(circularBuffer_t* cb) {
  * @param cb Pointer to the circular buffer.
  */
 void cbuf_free(circularBuffer_t* cb) {
-    // Free the saved lines
+    // Free the lines
     for (int i = 0; i < cb->circleSize_m; i++)
         free(cb->buffer_m[i]);
 
@@ -142,33 +142,32 @@ char *my_strdup(const char *src) {
  * @param linesNum Pointer to the number of lines.
  */
 void handle_arguments(int argc, char* argv[], FILE **f_ptr, int *linesNum) {
-    if (argc == 2) { // Only file specified
+    if (argc == 2) { // Only a file specified
         // Open the file
         *f_ptr = fopen(argv[1], "r");
         if (*f_ptr == NULL) {
             fprintf(stderr, "Error: Invalid input arguments\n");
             exit(EXIT_FAILURE);
         }
-    } else if (argc == 3) { // Number of lines specified
+    } else if (argc == 3) { // Only a number of lines specified
         if (strcmp(argv[1], "-n") != 0) {
             fprintf(stderr, "Error: Invalid input arguments\n");
             exit(EXIT_FAILURE);
         }
 
-        // Covert string to number
+        // Covert the string to a number
         char stringTerminated[1];
         int convertionResult = sscanf(argv[2], "%d%s", linesNum, stringTerminated);
-        if (convertionResult != 1) {
+        if (convertionResult != 1) { // Check if the conversion was successful
             fprintf(stderr, "Error: Invalid input arguments\n");
             exit(EXIT_FAILURE);
         }
-    } else if (argc == 4) { // File and number of lines
-        // Number of lines scecified first
-        if (strcmp(argv[1], "-n") == 0) {
-            // Covert string to number
+    } else if (argc == 4) { // Both a file and a number of lines specified
+        if (strcmp(argv[1], "-n") == 0) { // Number of lines scecified first
+            // Covert the string to a number
             char stringTerminated[1];
             int convertionResult = sscanf(argv[2], "%d%s", linesNum, stringTerminated);
-            if (convertionResult != 1) {
+            if (convertionResult != 1) { // Check if the conversion was successful
                 fprintf(stderr, "Error: Invalid input arguments\n");
                 exit(EXIT_FAILURE);
             }
@@ -179,16 +178,16 @@ void handle_arguments(int argc, char* argv[], FILE **f_ptr, int *linesNum) {
                 fprintf(stderr, "Error: Invalid input arguments\n");
                 exit(EXIT_FAILURE);
             }
-        } else if ((*f_ptr = fopen(argv[1], "r")) != NULL) { // File specified first
+        } else if ((*f_ptr = fopen(argv[1], "r")) != NULL) { // A file specified first
             if (strcmp(argv[2], "-n") != 0) {
                 fprintf(stderr, "Error: Invalid input arguments\n");
                 exit(EXIT_FAILURE);
             }
 
-            // Covert string to number
+            // Covert the string to a number
             char stringTerminated[1];
             int convertionResult = sscanf(argv[3], "%d%s", linesNum, stringTerminated);
-            if (convertionResult != 1) {
+            if (convertionResult != 1) { // Check if the conversion was successful
                 fclose(*f_ptr);
                 fprintf(stderr, "Error: Invalid input arguments\n");
                 exit(EXIT_FAILURE);
@@ -202,7 +201,7 @@ void handle_arguments(int argc, char* argv[], FILE **f_ptr, int *linesNum) {
         exit(EXIT_FAILURE);
     }
 
-    // Validate lines number
+    // Validate the number of lines
     if (*linesNum < 0) {
         fprintf(stderr, "Error: Invalid input arguments\n");
         exit(EXIT_FAILURE);
@@ -214,11 +213,11 @@ void handle_arguments(int argc, char* argv[], FILE **f_ptr, int *linesNum) {
 }
 
 int main(int argc, char* argv[]) {
-    // Initialize default values
+    // Initialize the default values
     FILE *f_ptr = stdin; // Default input
     int linesNum = 10; // Default number of lines
 
-    // Handle arguments
+    // Handle the arguments
     if (argc != 1)
         handle_arguments(argc, argv, &f_ptr, &linesNum);
 
@@ -226,16 +225,17 @@ int main(int argc, char* argv[]) {
     circularBuffer_t* circBuffer = cbuf_create(linesNum);
 
     // Create a buffer to store the lines
-    char currentLine[MAX_LINE_LEN + LINE_END_RESERVED]; // Maximum line length + '\0' + '\n'
+    char currentLine[MAX_LINE_LEN + LINE_END_RESERVED]; // Maximum line length + '\n' + '\0'
 
     int c; // Temporary variable for getc
     int errPrinted = 0; // Check if the error was printed
     char *lineCopy; // Copy of the line
 
-    // Read lines
+    // Read the lines
     while (fgets(currentLine, MAX_LINE_LEN + 2, f_ptr)) {
         // Check if the line is too long
         if (strlen(currentLine) > MAX_LINE_LEN) {
+            // Print the error message
             if (!errPrinted) {
                 errPrinted = 1; // Set the error flag
                 fprintf(stderr, "Warning: Line too long\n");
@@ -248,7 +248,7 @@ int main(int argc, char* argv[]) {
             while (((c = getc(f_ptr)) != '\n') && c != EOF);
         }
 
-        // Copy the line using custom strdup function
+        // Copy the line using a custom strdup function
         lineCopy = my_strdup(currentLine);
         if (lineCopy == NULL) { // Strdup memory allocation failed
             // Free the circular buffer

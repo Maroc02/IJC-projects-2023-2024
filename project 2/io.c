@@ -27,7 +27,7 @@ int read_word(char *s, int max, FILE *f) {
     // Clear the initial white spaces
     int read_char, read_cnt = 0;
 
-    // Check for EOF
+    // Check for the EOF
     if ((read_char = clear_space(f)) == EOF)
         return EOF;
 
@@ -36,7 +36,7 @@ int read_word(char *s, int max, FILE *f) {
 
     // Read the word
     while (read_cnt < (max - 1)) {
-        // Check for white space
+        // Check for white spaces
         if (isspace( (char) (read_char = fgetc(f))))
             break;
 
@@ -51,7 +51,7 @@ int read_word(char *s, int max, FILE *f) {
     // Terminate the string
     s[read_cnt] = '\0';
 
-    // Check if the word is too long
+    // Check if the read word is too long and clear the rest of the word if needed
     if (read_cnt == (max - 1))
         while (!isspace( (char) (read_char = fgetc(f))) && (read_char != EOF)) {read_cnt++;}
 
